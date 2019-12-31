@@ -45,12 +45,14 @@
 				</tbody>
 			</table>
 		</div>
-		<div id="example" style="text-align: center"> <ul id="pageLimit"></ul> </div>
-		<input type="hidden" id="pageNum" name="pageNum" th:value="${pageInfo.pageNum}" />
+		<div id="example" style="text-align: center">
+			<ul id="pageLimit"></ul>
+		</div>
+		<input type="hidden" id="pageNum" name="pageNum" th:value="${pageInfo.pageNum}" /> 
 		<input type="hidden" id="pages" name="pages" th:value="${pageInfo.pages}" />
 	</div>
-	
-	<script src="/js/jquery-2.2.1.min.js"></script>
+
+	<script src="/js/jquery-1.9.1.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="/js/bootstrap-paginator.min.js"></script>
 	<script>

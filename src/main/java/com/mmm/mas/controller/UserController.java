@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.github.pagehelper.PageInfo;
 import com.mmm.mas.common.ServerResponse;
@@ -41,12 +42,15 @@ public class UserController {
 //	}
 	
 	@GetMapping("/userlist")
-	public String getAllList(Model model, PageInfo<?> pageInfo) {
+	public ModelAndView getAllList(Model model, PageInfo<?> pageInfo) {
+		ModelAndView m = new ModelAndView();
 		int pageNum  = (pageInfo.getPageNum() == 0)? 1 : pageInfo.getPageNum();
 		int pageSize  = (pageInfo.getPageSize() == 0)? 10 : pageInfo.getPageSize();
 		PageInfo<User> result = annoUserService.getAllUserList(pageNum, pageSize);
-		model.addAttribute("users", result.getList());
-		model.addAttribute("pageInfo", pageInfo);
-		return "userlist";
+//		model.addAttribute("users", result.getList());
+//		model.addAttribute("pageInfo", pageInfo);
+		m.addObject("users", result.getList());
+		m.addObject("pageInfo", pageInfo);
+		return m;
 	}
 }
