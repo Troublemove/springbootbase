@@ -47,8 +47,9 @@ public class UserController {
 		int pageNum  = (pageInfo.getPageNum() == 0)? 1 : pageInfo.getPageNum();
 		int pageSize  = (pageInfo.getPageSize() == 0)? 10 : pageInfo.getPageSize();
 		PageInfo<User> result = annoUserService.getAllUserList(pageNum, pageSize);
-//		model.addAttribute("users", result.getList());
-//		model.addAttribute("pageInfo", pageInfo);
+		// 设置页面信息
+		pageInfo.setPageNum(pageNum);
+		pageInfo.setPages(result.getPages());
 		m.addObject("users", result.getList());
 		m.addObject("pageInfo", pageInfo);
 		return m;

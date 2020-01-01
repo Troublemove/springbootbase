@@ -1,9 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8" />
-<title>用户管理</title>
-<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<meta charset="UTF-8" />
+	<title>用户管理</title>
+	
+	<!-- 禁止请求favicon.ico 图标 -->
+	<!-- 
+	<link rel="icon" href="data:;base64,="> 
+	<link rel="icon" href="data:image/ico;base64,aWNv">
+	<link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+	-->
+	<link href="/css/base/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/user/user.css" rel="stylesheet">
 </head>
 <body>
 	<div class="container">
@@ -35,33 +43,32 @@
 				</thead>
 				<tbody>
 					<tr th:each="user:${users}">
-						<td height="40px"><a th:text="${user.id}" data-toggle="modal"
-							data-target="#myModal" onclick="values(this)"></a></td>
+						<td ><a th:text="${user.id}" data-toggle="modal" data-target="#myModal" onclick="values(this)"></a></td>
 						<td th:text="${user.username}"></td>
 						<td th:text="${user.email}"></td>
 						<td th:text="${user.mobile}"></td>
-						<td><a href="#" class="delete_a" th:value="${user.id}">删除</a></td>
+						<td><i class="icon-trash delete_i" th:value="${user.id}"></i></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-		<div id="example" style="text-align: center">
-			<ul id="pageLimit"></ul>
+		<div id="example">
+			<div id="pageLimit"></div>
 		</div>
 		<input type="hidden" id="pageNum" name="pageNum" th:value="${pageInfo.pageNum}" /> 
 		<input type="hidden" id="pages" name="pages" th:value="${pageInfo.pages}" />
 	</div>
 
-	<script src="/js/jquery-1.9.1.min.js"></script>
-	<script src="/js/bootstrap.min.js"></script>
-	<script src="/js/bootstrap-paginator.min.js"></script>
+	<script src="/js/base/jquery-1.9.1.min.js"></script>
+	<script src="/js/base/bootstrap.min.js"></script>
+	<script src="/js/base/bootstrap-paginator.js"></script>
 	<script>
 		$('#pageLimit').bootstrapPaginator({
 			currentPage : $("#pageNum").val(),
 			totalPages : $("#pages").val(),
 			size : "normal",
-			bootstrapMajorVersion : 3,
-			alignment : "right",
+			bootstrapMajorVersion : 2,
+			alignment : "center",
 			numberOfPages : 5,
 			itemTexts : function(type, page, current) {
 				switch (type) {
@@ -77,14 +84,30 @@
 					return page;
 				}
 			},
+			tooltipTitles: function (type, page, current) {
+	            switch (type) {
+	            case "first":
+	                return "首页";
+	            case "prev":
+	                return "上一页";
+	            case "next":
+	                return "下一页";
+	            case "last":
+	                return "末页";
+	            case "page":
+	                return (page === current) ? "当前第 " + page + " 页" : "跳转到第 " + page + " 页";
+	            }
+	        },
 			onPageClicked : function(event, originalEvent, type, page) {//给每个页眉绑定一个事件，其实就是ajax请求，其中page变量为当前点击的页上的数字。
-				window.location.href = "userlist?pageNum=" + page;
+				if ($("#pageNum").val() != page)
+					window.location.href = "userlist?pageNum=" + page;
 			}
 		});
+		
 		$(function() {
-			$(".delete_a").click(function() {
+			$(".delete_i").click(function() {
 				var userId = $(this).attr("value");
-				if (confirm("确认删除吗？")) {
+				if (confirm("确认删除 " + userId + " 吗？")) {
 					window.location.href = "/userdelete?id=" + userId;
 					return;
 				}

@@ -370,7 +370,7 @@
         buildPageItem: function (type, page) {
 
             var itemContainer = $("<li></li>"),//creates the item container
-                itemContent = $("<a></a>"),//creates the item content
+                itemContent = $("<a style='cursor: pointer;'></a>"),//creates the item content
                 text = "",
                 title = "",
                 itemContainerClass = this.options.itemContainerClass(type, page, this.currentPage),
@@ -379,29 +379,29 @@
 
 
             switch (type) {
-
+            // 注释内容为：当为首尾页时会隐藏首位页文字，所以注释掉
             case "first":
-                if (!this.getValueFromOption(this.options.shouldShowPage, type, page, this.currentPage)) { return; }
+//                if (!this.getValueFromOption(this.options.shouldShowPage, type, page, this.currentPage)) { return; }
                 text = this.options.itemTexts(type, page, this.currentPage);
                 title = this.options.tooltipTitles(type, page, this.currentPage);
                 break;
             case "last":
-                if (!this.getValueFromOption(this.options.shouldShowPage, type, page, this.currentPage)) { return; }
+//                if (!this.getValueFromOption(this.options.shouldShowPage, type, page, this.currentPage)) { return; }
                 text = this.options.itemTexts(type, page, this.currentPage);
                 title = this.options.tooltipTitles(type, page, this.currentPage);
                 break;
             case "prev":
-                if (!this.getValueFromOption(this.options.shouldShowPage, type, page, this.currentPage)) { return; }
+//                if (!this.getValueFromOption(this.options.shouldShowPage, type, page, this.currentPage)) { return; }
                 text = this.options.itemTexts(type, page, this.currentPage);
                 title = this.options.tooltipTitles(type, page, this.currentPage);
                 break;
             case "next":
-                if (!this.getValueFromOption(this.options.shouldShowPage, type, page, this.currentPage)) { return; }
+//                if (!this.getValueFromOption(this.options.shouldShowPage, type, page, this.currentPage)) { return; }
                 text = this.options.itemTexts(type, page, this.currentPage);
                 title = this.options.tooltipTitles(type, page, this.currentPage);
                 break;
             case "page":
-                if (!this.getValueFromOption(this.options.shouldShowPage, type, page, this.currentPage)) { return; }
+//                if (!this.getValueFromOption(this.options.shouldShowPage, type, page, this.currentPage)) { return; }
                 text = this.options.itemTexts(type, page, this.currentPage);
                 title = this.options.tooltipTitles(type, page, this.currentPage);
                 break;
@@ -629,13 +629,13 @@
 
             switch (type) {
             case "first":
-                return "Go to first page";
+            	return "Go to first page";
             case "prev":
-                return "Go to previous page";
+            	return "Go to previous page";
             case "next":
-                return "Go to next page";
+            	return "Go to next page";
             case "last":
-                return "Go to last page";
+            	return "Go to last page";
             case "page":
                 return (page === current) ? "Current page is " + page : "Go to page " + page;
             }

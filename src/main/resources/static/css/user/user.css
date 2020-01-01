@@ -1,0 +1,12 @@
+table td {
+	height: 40px;
+	text-align: center;
+}
+
+table td a,i{
+	cursor: pointer;
+}
+
+#example {
+	bottom: 20%;
+}
