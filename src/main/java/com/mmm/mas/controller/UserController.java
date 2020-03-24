@@ -41,7 +41,7 @@ public class UserController {
 //		return ServerResponse.createBySuccess("success", annoUserService.getAllUserList());
 //	}
 	
-	@GetMapping("/userlist")
+	@GetMapping("/userlists")
 	public ModelAndView getAllList(Model model, PageInfo<?> pageInfo) {
 		ModelAndView m = new ModelAndView();
 		int pageNum  = (pageInfo.getPageNum() == 0)? 1 : pageInfo.getPageNum();

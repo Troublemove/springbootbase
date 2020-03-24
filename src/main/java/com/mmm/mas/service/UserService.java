@@ -15,5 +15,9 @@ public class UserService {
 	public User selectByPrimaryKey(Integer id) {
         return userMapper.selectByPrimaryKey(id);
     }
+
+	public User findByName(String username) {
+		return userMapper.findByName(username);
+	}
 	
 }

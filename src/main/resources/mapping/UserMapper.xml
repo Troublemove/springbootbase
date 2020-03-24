@@ -9,10 +9,11 @@
 		<result column="email" jdbcType="VARCHAR" property="email" />
 		<result column="sex" jdbcType="VARCHAR" property="sex" />
 		<result column="nickname" jdbcType="VARCHAR" property="nickname" />
+		<result column="auth" jdbcType="VARCHAR" property="auth" />
 	</resultMap>
 	
 	<sql id="Base_Column_List">
-		id, username, password, mobile, email, sex, nickname
+		id, username, password, mobile, email, sex, nickname, auth
 	</sql>
 	
 	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultType="com.mmm.mas.entity.User">
@@ -20,6 +21,13 @@
 		<include refid="Base_Column_List" />
 		from user
 		where id = #{id,jdbcType=INTEGER}
+	</select>
+	
+	<select id="findByName" parameterType="java.lang.String" resultType="com.mmm.mas.entity.User">
+		select
+		<include refid="Base_Column_List" />
+		from user
+		where username = #{username,jdbcType=INTEGER}
 	</select>
 	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
@@ -34,7 +42,7 @@
 		values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR},
 		#{password,jdbcType=VARCHAR},
 		#{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR},
-		#{nickname,jdbcType=VARCHAR})
+		#{nickname,jdbcType=VARCHAR},#{auth,jdbcType=VARCHAR})
 	</insert>
 	
 	<insert id="insertSelective" parameterType="com.mmm.mas.entity.User">
@@ -61,6 +69,9 @@
 			<if test="nickname != null">
 				nickname,
 			</if>
+			<if test="auth != null">
+				auth,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -83,6 +94,9 @@
 			</if>
 			<if test="nickname != null">
 				#{nickname,jdbcType=VARCHAR},
+			</if>
+			<if test="auth != null">
+				#{auth,jdbcType=VARCHAR},
 			</if>
 		</trim>
 	</insert>
@@ -108,6 +122,9 @@
 			<if test="nickname != null">
 				nickname = #{nickname,jdbcType=VARCHAR},
 			</if>
+			<if test="auth != null">
+				auth = #{auth,jdbcType=VARCHAR},
+			</if>
 		</set>
 		where id = #{id,jdbcType=INTEGER}
 	</update>
@@ -120,6 +137,7 @@
 		email = #{email,jdbcType=VARCHAR},
 		sex = #{sex,jdbcType=VARCHAR},
 		nickname = #{nickname,jdbcType=VARCHAR}
+		auth = #{auth,jdbcType=VARCHAR}
 		where id = #{id,jdbcType=INTEGER}
 	</update>
 </mapper>

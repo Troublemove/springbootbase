@@ -14,6 +14,8 @@ public class User {
     private String sex;
 
     private String nickname;
+    
+    private String auth;
 
     public Integer getId() {
         return id;
@@ -67,7 +69,15 @@ public class User {
         return nickname;
     }
 
-    public void setNickname(String nickname) {
+    public String getAuth() {
+		return auth;
+	}
+
+	public void setAuth(String auth) {
+		this.auth = auth;
+	}
+
+	public void setNickname(String nickname) {
         this.nickname = nickname == null ? null : nickname.trim();
     }
 }
