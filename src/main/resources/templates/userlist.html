@@ -61,6 +61,8 @@
 		<input type="hidden" id="pageNum" name="pageNum" th:value="${pageInfo.pageNum}" /> 
 		<input type="hidden" id="pages" name="pages" th:value="${pageInfo.pages}" />
 	</div>
+	
+	<div th:replace="~{base/footer::footer}"></div>
 
 	<script src="/js/base/jquery-1.9.1.min.js"></script>
 	<script src="/js/base/bootstrap.min.js"></script>
