@@ -42,12 +42,15 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="user:${users}">
+					<tr th:if="${users} ne null" th:each="user:${users}">
 						<td ><a th:text="${user.id}" data-toggle="modal" data-target="#myModal" onclick="values(this)"></a></td>
 						<td th:text="${user.username}"></td>
 						<td th:text="${user.email}"></td>
 						<td th:text="${user.mobile}"></td>
 						<td><i class="icon-trash delete_i" th:value="${user.id}"></i></td>
+					</tr>
+					<tr th:if="${users} eq null">
+						<td>无数据</td>
 					</tr>
 				</tbody>
 			</table>
@@ -58,6 +61,8 @@
 		<input type="hidden" id="pageNum" name="pageNum" th:value="${pageInfo.pageNum}" /> 
 		<input type="hidden" id="pages" name="pages" th:value="${pageInfo.pages}" />
 	</div>
+	
+	<div th:replace="~{base/footer::footer}"></div>
 
 	<script src="/js/base/jquery-1.9.1.min.js"></script>
 	<script src="/js/base/bootstrap.min.js"></script>
