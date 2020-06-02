@@ -7,14 +7,14 @@ import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.mmm.mas.dao.AnnoUserDao;
+import com.mmm.mas.dao.UserDao;
 import com.mmm.mas.entity.User;
 
 @Service
-public class AnnoUserService {
+public class UserService {
 	
 	@Autowired
-	private AnnoUserDao annoUserDao;
+	private UserDao annoUserDao;
 	
 	/**
 	 * 添加了分页

@@ -16,7 +16,7 @@ import com.mmm.mas.entity.User;
  *
  */
 @Repository
-public interface AnnoUserDao {
+public interface UserDao {
 
 	// 使用注解
 	@Select("select * from user")

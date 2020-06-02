@@ -17,7 +17,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mmm.mas.entity.User;
-import com.mmm.mas.service.AnnoUserService;
+import com.mmm.mas.service.UserService;
 
 /**
  * 自定义Realm
@@ -35,7 +35,7 @@ public class UserRealm extends AuthorizingRealm {
 
 
 	@Autowired
-	private AnnoUserService userService;
+	private UserService userService;
 
 	/**
 	 * 授权

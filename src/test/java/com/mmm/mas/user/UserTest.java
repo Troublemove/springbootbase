@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.mmm.mas.entity.User;
-import com.mmm.mas.service.AnnoUserService;
+import com.mmm.mas.service.UserService;
 
 /**
  * SpringBoot 测试类
@@ -22,7 +22,7 @@ import com.mmm.mas.service.AnnoUserService;
 public class UserTest {
 
 	@Autowired
-	private AnnoUserService annoUserDao;
+	private UserService annoUserDao;
 
 	@Test
 	public void testGetUserByIdAndName() {

@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.github.pagehelper.PageInfo;
 import com.mmm.mas.entity.User;
-import com.mmm.mas.service.AnnoUserService;
+import com.mmm.mas.service.UserService;
 
 @RestController
 public class UserController {
@@ -18,7 +18,7 @@ public class UserController {
 	private Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	@Autowired
-	private AnnoUserService annoUserService;
+	private UserService annoUserService;
 	
 	// 注解形式
 //	@GetMapping("/allList")
