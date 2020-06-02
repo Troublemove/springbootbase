@@ -29,7 +29,23 @@ public class AnnoUserService {
 		return pageInfo;
 	}
 	
+	public User getUserByid(Integer id) {
+		return annoUserDao.getUserByid(id);
+	}
+	
+	public User findByName(String username) {
+		return annoUserDao.findByName(username);
+	}
+	
 	public User getUserByid(int id, String name) {
 		return annoUserDao.getUserByIdAndName(id, name);
+	}
+	
+	public User getUserByIdAndName(int id, String name) {
+		return annoUserDao.getUserByIdAndName(id, name);
+	}
+	
+	public User getOtherUserByIdAndName(int id, String name) {
+		return annoUserDao.getOtherUserByIdAndName(id, name);
 	}
 }

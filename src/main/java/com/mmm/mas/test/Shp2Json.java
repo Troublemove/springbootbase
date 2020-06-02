@@ -15,6 +15,10 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 
+/**
+ * 地图shp转json
+ *
+ */
 public class Shp2Json {
 
 	public static void main(String[] args) {

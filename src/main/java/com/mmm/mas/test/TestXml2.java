@@ -456,7 +456,7 @@ public class TestXml2 {
 				"</Protocol>\r\n" + 
 				"\r\n" + 
 				"";
-		protoMap.put("xmlProto", "");
+		protoMap.put("xmlProto", s);
 		TestXml2 t = new TestXml2();
 		String protomsg = "b1b10000000000000bb8000003e80bb8000003e8000000000000000000000000000000000000000000000000000000000000";
 		String path = "C:\\Users\\ZHANGJX\\Desktop\\radar\\dianji.xml";
