@@ -1,5 +1,7 @@
 package com.mmm.mas.shiro;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -9,6 +11,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,14 +31,19 @@ import com.mmm.mas.service.UserService;
  */
 public class UserRealm extends AuthorizingRealm {
 
+	private static Logger log = LogManager.getLogger(AuthorizingRealm.class);
+
+
 	@Autowired
 	private UserService userService;
 
+	/**
+	 * 授权
+	 */
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		//doGetAuthorizationInfo方法可能会执行多次，权限判断次数多少，就会执行多少次
-        System.out.println("执行授权逻辑1");
-        System.out.println("执行授权逻辑2");
+        log.debug("执行授权逻辑");
         
         //给资源进行授权
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
@@ -46,17 +54,28 @@ public class UserRealm extends AuthorizingRealm {
         //到数据库查询当前登录用户的授权字符串
         //获取当前登录用户
         Subject subject = SecurityUtils.getSubject();
+		Object principal = principals.getPrimaryPrincipal();
         User user = (User)subject.getPrincipal();
-        User dbUser = userService.selectByPrimaryKey(user.getId());
+        User dbUser = userService.getUserByid(user.getId());
         
         info.addStringPermission(dbUser.getAuth());
-        
+		if ("admin".equals(principal)) {
+			info.addRole("admin");
+		}
+		if ("user".equals(principal)) {
+			info.addRole("list");
+		}
+		info.addRole("user");
+
         return info;
 	}
 
+	/**
+	 * 用户验证
+	 */
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken arg0) throws AuthenticationException {
-		System.out.println("执行认证逻辑");
+		log.debug("执行用户验证");
 		
 		// 编写shiro判断逻辑，判断用户名和密码
 		// 1.判断用户名 token中的用户信息是登录时候传进来的
@@ -78,4 +97,19 @@ public class UserRealm extends AuthorizingRealm {
 		return new SimpleAuthenticationInfo(user, user.getPassword(), "");
 	}
 
+	/**
+	 * 将一些数据放到ShiroSession中,以便于其它地方使用
+	 *
+	 * 比如Controller,使用时直接用HttpSession.getAttribute(key)就可以取到
+	 */
+	private void setSession(Object key, Object value) {
+		Subject currentUser = SecurityUtils.getSubject();
+		if (null != currentUser) {
+			Session session = currentUser.getSession();
+			log.debug("Session默认超时时间为[" + session.getTimeout() + "]毫秒");
+			if (null != session) {
+				session.setAttribute(key, value);
+			}
+		}
+	}
 }
