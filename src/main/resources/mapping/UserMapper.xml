@@ -16,20 +16,6 @@
 		id, username, password, mobile, email, sex, nickname, auth
 	</sql>
 	
-	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultType="User">
-		select
-		<include refid="Base_Column_List" />
-		from user
-		where id = #{id,jdbcType=INTEGER}
-	</select>
-	
-	<select id="findByName" parameterType="java.lang.String" resultType="User">
-		select
-		<include refid="Base_Column_List" />
-		from user
-		where username = #{username,jdbcType=INTEGER}
-	</select>
-	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		delete from user
 		where id = #{id,jdbcType=INTEGER}
