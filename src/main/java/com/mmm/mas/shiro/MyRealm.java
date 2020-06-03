@@ -29,7 +29,7 @@ import com.mmm.mas.service.UserService;
  * 这样可以提高系统的处理效率。
  *
  */
-public class UserRealm extends AuthorizingRealm {
+public class MyRealm extends AuthorizingRealm {
 
 	private static Logger log = LogManager.getLogger(AuthorizingRealm.class);
 
@@ -76,6 +76,10 @@ public class UserRealm extends AuthorizingRealm {
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken arg0) throws AuthenticationException {
 		log.debug("执行用户验证");
+		//加这一步的目的是在Post请求的时候会先进认证，然后在到请求
+        if (arg0.getPrincipal() == null) {
+            return null;
+        }
 		
 		// 编写shiro判断逻辑，判断用户名和密码
 		// 1.判断用户名 token中的用户信息是登录时候传进来的
@@ -86,15 +90,17 @@ public class UserRealm extends AuthorizingRealm {
 		if (user == null) {
 			// 用户名不存在
 			return null;// shiro底层会抛出UnKnowAccountException
+		} else {
+			//这里验证authenticationToken和simpleAuthenticationInfo的信息
+			// 2.判断密码
+			// 第二个字段是user.getPassword()，注意这里是指从数据库中获取的password。第三个字段是realm，即当前realm的名称。
+			// 这块对比逻辑是先对比username，但是username肯定是相等的，所以真正对比的是password。
+			// 从这里传入的password（这里是从数据库获取的）和token（filter中登录时生成的）中的password做对比，如果相同就允许登录，
+			// 不相同就抛出IncorrectCredentialsException异常。
+			// 如果认证不通过，就不会执行下面的授权方法了
+            SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(user, user.getPassword().toString(), getName());
+            return simpleAuthenticationInfo;
 		}
-		
-		// 2.判断密码
-		// 第二个字段是user.getPassword()，注意这里是指从数据库中获取的password。第三个字段是realm，即当前realm的名称。
-		// 这块对比逻辑是先对比username，但是username肯定是相等的，所以真正对比的是password。
-		// 从这里传入的password（这里是从数据库获取的）和token（filter中登录时生成的）中的password做对比，如果相同就允许登录，
-		// 不相同就抛出IncorrectCredentialsException异常。
-		// 如果认证不通过，就不会执行下面的授权方法了
-		return new SimpleAuthenticationInfo(user, user.getPassword(), "");
 	}
 
 	/**

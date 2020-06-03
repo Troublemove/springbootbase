@@ -26,7 +26,6 @@ public class ShiroConfig {
 			@Qualifier("securityManager") DefaultWebSecurityManager securityManager) {
 
 		ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
-
 		// 设置安全管理器
 		shiroFilterFactoryBean.setSecurityManager(securityManager);
 
@@ -68,19 +67,19 @@ public class ShiroConfig {
 	 * 里面主要定义了登录，创建subject，登出等操作
 	 */
 	@Bean(name = "securityManager")
-	public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier("userRealm") UserRealm userRealm) {
+	public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier("MyRealm") MyRealm MyRealm) {
 		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
 		// 关联realm
-		securityManager.setRealm(userRealm);
+		securityManager.setRealm(MyRealm);
 		return securityManager;
 	}
 
 	/**
-	 * 创建Realm
+	 * 创建Realm,将自己的验证方式加入容器
 	 */
-	@Bean(name = "userRealm")
-	public UserRealm getRealm() {
-		return new UserRealm();
+	@Bean(name = "MyRealm")
+	public MyRealm getRealm() {
+		return new MyRealm();
 	}
 
 	/**
