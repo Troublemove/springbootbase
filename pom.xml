@@ -14,7 +14,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>mas</name>
 	<description>Demo project for Spring Boot</description>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -44,7 +44,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
+			<scope>provided</scope>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
@@ -67,12 +67,12 @@
 			<artifactId>druid-spring-boot-starter</artifactId>
 			<version>1.1.14</version>
 		</dependency>
-		<!--打包时排除tomcat -->
-		<dependency>
+		<!--provided打包时排除tomcat -->
+		<!-- <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
-		</dependency>
+		</dependency> -->
 
 		<!-- 构建Restful API -->
 		<!-- swagger2-->
@@ -206,23 +206,24 @@
 			<resource>
 				<directory>src/main/resources</directory>
 				<includes>
-                    <include>**/*.properties</include>
-                    <include>**/*.xml</include>
-                    <include>**/*.css</include>
-                    <include>**/*.js</include>
-                    <include>**/*.html</include>
-                    <include>**/*.txt</include><!--将banner.txt 编译进target-->
-                </includes>
+					<include>**/*.properties</include>
+					<include>**/*.xml</include>
+					<include>**/*.css</include>
+					<include>**/*.js</include>
+					<include>**/*.html</include>
+					<include>**/*.txt</include><!--将banner.txt 编译进target-->
+				</includes>
 			</resource>
 		</resources>
 		<plugins>
 			<!--  注释spring-boot-maven-plugin原因：因为这个插件会重新打包(repackage),打包成spring-boot可通过-jar形式运行的jar或war包，并且把原来maven打包重名称成.war.original结尾 -->
-			<!-- 
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+		        	<mainClass>com.mmm.mas.MasApplication</mainClass> 
+		        </configuration>
 			</plugin>
-			 -->
 			<!-- mybatis generator 自动生成代码插件 -->
 			<plugin>
 				<groupId>org.mybatis.generator</groupId>
@@ -234,14 +235,14 @@
 					<verbose>true</verbose>
 				</configuration>
 			</plugin>
-			<!-- 打包的时候定义war名称 -->
-			<plugin>
+			<!-- 打war包的时候定义war名称 -->
+			<!-- <plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
 					<warName>mas</warName>
 				</configuration>
-			</plugin>
+			</plugin> -->
 		</plugins>
 	</build>
 
